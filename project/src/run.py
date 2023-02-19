@@ -1,4 +1,4 @@
-from data.cleaning import feature_selection, grade_formatting
+from data.cleaning import grade_formatting
 from data.utils import load_data_to_dataframe, save_data_to_csv
 
 
@@ -10,8 +10,7 @@ def main():
         print("It was not possible to read the provided .csv file")
         exit(0)
 
-    cleaned_df = feature_selection(dataframe, main_variable="price")
-    cleaned_df = grade_formatting(dataframe=cleaned_df)
+    cleaned_df = grade_formatting(dataframe)
     save_data_to_csv(cleaned_df, data_path="../data/interim/kc_house_data.csv")
 
 
