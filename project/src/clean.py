@@ -16,7 +16,7 @@ def main():
                    "lat", "long", "zipcode", "yr_renovated"]
     df_no_outlier = drop_outliers_iqr(dataframe, ignore_columns=ignore_cols)
 
-    # Save new dataframes
+    # Save interim dataframes
     save_data_to_csv(dataframe, data_path="../data/interim/kc_house_data.csv")
     save_data_to_csv(dataframe=df_no_outlier, data_path="../data/interim/kc_house_data_no_outlier.csv")
 
