@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+
 def drop_outliers_iqr(dataframe: pd.DataFrame, ignore_columns: list[str] = []) -> pd.DataFrame:
     """ Returns a dataframe without outliers
 
@@ -19,11 +20,13 @@ def drop_outliers_iqr(dataframe: pd.DataFrame, ignore_columns: list[str] = []) -
     iqr = q3-q1
 
     condition = ~(
-        (dataframe[cols] < (q1 - 1.5 * iqr)) | (dataframe[cols] > (q3 + 1.5 * iqr))
+        (dataframe[cols] < (q1 - 1.5 * iqr)
+         ) | (dataframe[cols] > (q3 + 1.5 * iqr))
     ).any(axis=1)
 
     cleaned_df = dataframe[condition]
     return cleaned_df
+
 
 def grade_formatting(dataframe: pd.DataFrame) -> pd.DataFrame:
     """ Returns a formatted dataframe

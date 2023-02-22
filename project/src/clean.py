@@ -18,7 +18,8 @@ def main():
 
     # Save interim dataframes
     save_data_to_csv(dataframe, data_path="../data/interim/kc_house_data.csv")
-    save_data_to_csv(dataframe=df_no_outlier, data_path="../data/interim/kc_house_data_no_outlier.csv")
+    save_data_to_csv(dataframe=df_no_outlier,
+                     data_path="../data/interim/kc_house_data_no_outlier.csv")
 
 
 if __name__ == "__main__":
