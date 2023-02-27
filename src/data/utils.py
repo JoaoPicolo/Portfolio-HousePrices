@@ -14,7 +14,6 @@ def load_data_to_dataframe(data_path: str) -> pd.DataFrame:
     return dataframe
 
 
-# TODO: Add tests
 def save_data_to_csv(dataframe: pd.DataFrame, data_path: str):
     """ Saves the dataframe in the provided path as a .csv file
 
