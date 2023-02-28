@@ -1,10 +1,10 @@
 import sys
+
 import pytest
 import pandas as pd
 
 sys.path.append(".")
-from src.data.cleaning import grade_formatting
-
+from src.data.cleaning import drop_outliers_iqr, grade_formatting
 
 @pytest.fixture
 def get_dataframe_missing() -> int:
@@ -36,6 +36,17 @@ def test_no_missing_values(get_dataframe_duplicates: callable):
         Test if there are no duplicates values in the dataframe
     """
     assert get_dataframe_duplicates.empty
+
+
+def test_outliers_dropping():
+    """
+        Test if the dataframe is correctly bwing returned after dropping outliers
+    """
+    dataframe = pd.read_csv("data/raw/kc_house_data.csv")
+    ignore_cols = ["id", "date", "waterfront",
+                   "lat", "long", "zipcode", "yr_renovated"]
+    dataframe = drop_outliers_iqr(dataframe, ignore_columns=ignore_cols)
+    assert type(dataframe) == pd.DataFrame
 
 
 def test_grade_data_formatting():
