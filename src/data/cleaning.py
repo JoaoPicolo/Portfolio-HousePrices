@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
+from typing import List
 
 
-def drop_outliers_iqr(dataframe: pd.DataFrame, ignore_columns: list[str] = []) -> pd.DataFrame:
+def drop_outliers_iqr(dataframe: pd.DataFrame, ignore_columns: List[str] = []) -> pd.DataFrame:
     """ Returns a dataframe without outliers
 
     Uses IQR approach to remove outliers.
