@@ -1,10 +1,11 @@
 import pytest
 import numpy as np
 import pandas as pd
+from typing import Dict
 
 
 @pytest.fixture
-def get_dataframe_types() -> dict[str, np.dtype]:
+def get_dataframe_types() -> Dict[str, np.dtype]:
     """
         Loads the dataframe to be tested
     """
