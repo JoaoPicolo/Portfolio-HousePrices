@@ -1,7 +1,13 @@
+import sys
+
 import pytest
 import numpy as np
 import pandas as pd
+
 from typing import Dict
+
+sys.path.append(".")
+from src.data.utils import load_data_to_dataframe, save_data_to_csv
 
 
 @pytest.fixture
@@ -30,3 +36,20 @@ def test_df_data_types(get_dataframe_types: callable):
     }
 
     assert get_dataframe_types == default_types
+
+
+def test_df_load():
+    """
+        Test if the dataframe is being correctly loaded
+    """
+    dataframe = load_data_to_dataframe("data/raw/kc_house_data.csv")
+    assert type(dataframe) == pd.DataFrame
+
+def test_df_save():
+    """
+        Test if the dataframe is being correctly saved
+    """
+    dataframe = pd.read_csv("data/raw/kc_house_data.csv")
+    result = save_data_to_csv(dataframe, data_path="data/raw/kc_house_data.csv")
+    
+    assert result == None
