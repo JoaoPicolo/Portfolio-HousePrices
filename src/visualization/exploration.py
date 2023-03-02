@@ -1,4 +1,4 @@
-# TODO: Test with pytest-mpl in the future, then remove it from the codecov.yml
+# TODO: Test with pytest-mpl in the future
 
 import math
 

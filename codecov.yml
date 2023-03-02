@@ -1,6 +1,4 @@
 # Ignores main functions once the code inside them
 #  have already been tested on unit testing
 ignore:
-  - "src/clean.py"
-  - "src/visualization.py"
-  - "src/visualization/*"
+  - "src/*.py"
