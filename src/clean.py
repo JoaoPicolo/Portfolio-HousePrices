@@ -10,8 +10,10 @@ def main():
         print("It was not possible to read the provided .csv file")
         exit(0)
 
+    # Formatts the dataframe
     dataframe = grade_formatting(dataframe)
 
+    # Drop outliers ignoring outliers on the specified columns
     ignore_cols = ["id", "date", "waterfront",
                    "lat", "long", "zipcode", "yr_renovated"]
     df_no_outlier = drop_outliers_iqr(dataframe, ignore_columns=ignore_cols)
