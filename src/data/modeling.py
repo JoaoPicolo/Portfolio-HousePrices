@@ -15,6 +15,7 @@ def calculate_house_age(year_of_contruction: pd.Series, current_year: int) -> pd
 
     return age
 
+
 def calculate_last_renovation(year_of_renovation: pd.Series, house_age: pd.Series, current_year: int) -> pd.Series:
     """ Returns the years since the last renovation
 
