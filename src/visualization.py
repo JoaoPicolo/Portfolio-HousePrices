@@ -1,5 +1,5 @@
 from data.utils import load_data_to_dataframe
-from visualization.exploration import get_correlation_plot, get_outliers_plot, get_distribution_plot
+from visualization.exploration import get_correlation_plot, get_outliers_plot, get_distribution_plot, get_scatter_plot
 
 
 def main():
@@ -14,6 +14,7 @@ def main():
     get_correlation_plot(dataframe)
     get_outliers_plot(dataframe)
     get_distribution_plot(dataframe)
+    get_scatter_plot(dataframe, target_variable=dataframe["price"])
 
 
 if __name__ == "__main__":
