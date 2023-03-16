@@ -32,7 +32,7 @@ def calculate_last_renovation(year_of_renovation: pd.Series, house_age: pd.Serie
     for idx, year in year_of_renovation.items():
         if year > 0:
             last_renovation.append(current_year - year)
-        else: # If there was no renovation, the year is equal to the construction year
+        else: # If there was no renovation, the year is equal to the house age
             last_renovation.append(house_age[idx])
 
     return pd.Series(last_renovation)

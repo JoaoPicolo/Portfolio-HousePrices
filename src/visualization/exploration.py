@@ -67,3 +67,28 @@ def get_distribution_plot(dataframe: pd.DataFrame, ignore_columns: list[str] = [
 
     plt.tight_layout()  # adjusting the spacing between subplots
     plt.show  # displaying the final figure
+
+
+def get_scatter_plot(dataframe: pd.DataFrame, target_variable: pd.Series, ignore_columns: list[str] = []):
+    """ Shows a distribution plot for each columns in the dataframe
+
+    Parameters:
+    dataframe: Dataframe on which the operation will be performed
+    target_variable: The variable which every other variable shoud be plotted against
+    ignore_columns: Columns to ignored when creating the distribution plots
+    """
+    cleaned_df = dataframe.drop(ignore_columns, axis=1)
+    columns = cleaned_df.columns
+
+    ncols = 2
+    nrows = math.ceil(len(columns)/2)
+    _, axes = plt.subplots(nrows, ncols, figsize=(20, 40))
+    for index, axis in enumerate(axes.reshape(-1)):
+        if index < len(columns):
+            plot = sns.scatterplot(x=cleaned_df[columns[index]], y=target_variable, ax=axis)
+            plot.set_title(f"{columns[index]} Correlation")
+        else:  # If number of plots is odd, don't print the last one since it's expecting an even number of plots
+            axis.axis('off')
+
+    plt.tight_layout()  # adjusting the spacing between subplots
+    plt.savefig('temp.png')  # displaying the final figure
