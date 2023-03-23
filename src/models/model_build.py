@@ -28,6 +28,8 @@ def xgboost_train(X_train: pd.DataFrame, y_train: pd.DataFrame, n_iter: int = 5)
     return search
 
 
-def xgboost_test(xgb_search: RandomizedSearchCV, X_test: pd.DataFrame, y_test: pd.DataFrame):
+def xgboost_test(xgb_search: RandomizedSearchCV, X_test: pd.DataFrame, y_test: pd.DataFrame) -> np.ndarray:
     y_pred = xgb_search.predict(X_test)
     print("Predicted RMSE: ", np.sqrt(mean_squared_error(y_test, y_pred)))
+
+    return y_pred
