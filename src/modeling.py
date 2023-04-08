@@ -1,3 +1,5 @@
+import pandas as pd
+
 from data.utils import load_data_to_dataframe, save_data_to_csv
 from data.modeling import calculate_house_age, calculate_last_renovation
 
@@ -23,9 +25,13 @@ def main():
             year_of_renovation=dataframe["yr_renovated"], house_age=dataframe["age"], current_year=df_date)
 
         # Remove columns that do not affect the target variable
-        ignore_columns = ["id", "date", "yr_built", "yr_renovated",
+        ignore_columns = ["id", "yr_built", "yr_renovated",
                           "zipcode", "lat", "long", "sqft_living15", "sqft_lot15"]
         dataframe = dataframe.drop(labels=ignore_columns, axis="columns")
+
+        # Formats the date column to contain month and year only
+        dataframe["date"] = pd.to_datetime(dataframe["date"], format="%Y%m%dT%H%M%S")
+        dataframe["date"] = dataframe["date"].dt.strftime("%m-%Y")
 
         # Save processed dataframe
         save_data_to_csv(dataframe, data_path=dataset.replace("interim", "processed"))
