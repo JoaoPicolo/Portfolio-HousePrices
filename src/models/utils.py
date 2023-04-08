@@ -1,10 +1,24 @@
 from typing import Dict, List, Union
 
+import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_absolute_percentage_error as mape
+from sklearn.model_selection import RandomizedSearchCV
 
 # TODO: Add tests for these method
+def evaluate_cv_search(search: RandomizedSearchCV):
+    """ Evaluates the trained XGBoost model uing randomized search
+
+    Parameters:
+    search: The randomized search object
+    """
+    print("Best parameters:", search.best_params_)
+    print("Lowest RMSE: ", np.sqrt(-search.best_score_))
+    print("Feature importance:", search.best_estimator_.feature_importances_)
+
+
 def get_clusters(dataframe: pd.DataFrame, n_clusters = 10, ignore_cols: List[str] = []) -> Union[pd.DataFrame, KMeans]:
     """ Assign each house in the dataset a cluster
 
@@ -120,5 +134,6 @@ def get_forecast_by_cluster(clusters: Dict[str, pd.DataFrame]) -> Dict[str, List
         results[key] = []
         results[key].append(y_test[1])
         results[key].append(dt_seq_preds[1])
+        print(f"MAPE for cluster {key} is {mape(dt_seq_preds.reshape(1, -1), y_test.reshape(1, -1))}")
 
     return results
