@@ -1,10 +1,55 @@
+from typing import Dict, List
+
 import numpy as np
 import pandas as pd
 import xgboost as xgb
-from sklearn.metrics import mean_squared_error
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import mean_absolute_percentage_error as mape
+
+from utils import normalize_clusters_by_date, window_input_output
 
 # TODO: Add tests for these method
+def get_forecast_by_cluster(clusters: Dict[str, pd.DataFrame]) -> Dict[str, List]:
+    """ gets the forecast model for each cluster
+
+    Parameters:
+    clusters: Dict containg the cluster as key to dataframe
+
+    Returns:
+    results: Dict containing the cluster as key to array of test values
+    and predicted values
+    """
+    results = {}
+    for key in clusters:
+        cluster_df = clusters[key]
+        cluster_df = normalize_clusters_by_date(cluster_df)
+        seq_df = window_input_output(cluster_df, 5, 5)
+
+        # Builds train and test set
+        X_cols = [col for col in seq_df.columns if col.startswith("x")]
+        X_cols.insert(0, "price")
+        y_cols = [col for col in seq_df.columns if col.startswith("y")]
+
+        # Will use all, but the two last rows for train
+        X_train = seq_df[X_cols][:-2].values
+        y_train = seq_df[y_cols][:-2].values
+
+        # Will use the last two rows for test
+        X_test = seq_df[X_cols][-2:].values
+        y_test = seq_df[y_cols][-2:].values
+
+        dt_seq = DecisionTreeRegressor(random_state=42)
+        dt_seq.fit(X_train, y_train)
+        dt_seq_preds = dt_seq.predict(X_test)
+
+        results[key] = []
+        results[key].append(y_test[1])
+        results[key].append(dt_seq_preds[1])
+        print(f"MAPE for cluster {key} is {mape(dt_seq_preds.reshape(1, -1), y_test.reshape(1, -1))}")
+
+    return results
+
 def xgboost_train(X_train: pd.DataFrame, y_train: pd.DataFrame, n_iter: int = 5) -> RandomizedSearchCV:
     """ Trains the XGBoost model against the data
 
@@ -36,20 +81,3 @@ def xgboost_train(X_train: pd.DataFrame, y_train: pd.DataFrame, n_iter: int = 5)
     search.fit(X_train, y_train)
 
     return search
-
-
-def xgboost_test(xgb_search: RandomizedSearchCV, X_test: pd.DataFrame, y_test: pd.DataFrame) -> np.ndarray:
-    """ Testes the trained XGBoost against the data
-
-    Parameters:
-    xgb_search: The randomized search object
-    X_test: The data to be tested
-    y_test: The labels for each test data
-
-    Returns:
-    y_pred: The predicted values for each test data
-    """
-    y_pred = xgb_search.predict(X_test)
-    print("Predicted RMSE: ", np.sqrt(mean_squared_error(y_test, y_pred)))
-
-    return y_pred

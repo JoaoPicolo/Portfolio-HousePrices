@@ -32,6 +32,7 @@ def get_train_test_data(
         test_size: float = 0.2
     ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """ Splits the dataset for training and testing
+
     Parameters:
     dataframe: Dataframe to be split
     target_variables: Target variables to be used by the model
