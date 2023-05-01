@@ -6,3 +6,5 @@
 - The **utils** folder contains utility scripts that can be used throughout the project.
 - The **clean.py** is a script that runs the logic for cleaning the dataset.
 - The **visualization.py** is a script that runs the logic for generating the visual dataset reports.
+- The **modeling.py** is a script that runs the logic for data modeling.
+- The **model_build.py** is a script that runs the logic for builiding the models.
