@@ -7,7 +7,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import mean_absolute_percentage_error as mape
 
-from utils import normalize_clusters_by_date, window_input_output
+from .utils import normalize_clusters_by_date, window_input_output
 
 # TODO: Add tests for these method
 def get_forecast_by_cluster(clusters: Dict[str, pd.DataFrame]) -> Dict[str, List]:

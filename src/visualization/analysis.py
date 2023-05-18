@@ -27,7 +27,7 @@ def plot_prediction(y_true: np.ndarray, y_pred: np.ndarray):
 
     plt.clf()
     sns.lineplot(data=true_values, x=true_values.index, y="Value", color="red", label="True")
-    sns.lineplot(data=false_values, x=false_values.index, y="Value", color="blue", label="Predicted")
+    sns.lineplot(data=false_values, x=false_values.index, y="Value", color="blue", label="Predicted", alpha=0.4)
     plt.title("True Values x Predicted Values")
     plt.show()
 
